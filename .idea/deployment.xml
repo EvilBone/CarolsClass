@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="aliyun">
+  <component name="PublishConfigData" serverName="pi">
     <serverData>
       <paths name="aliyun">
         <serverdata>
           <mappings>
             <mapping deploy="/root/CarolsClass" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="pi">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/pi/CarolsClass" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
