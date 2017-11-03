@@ -26,7 +26,29 @@ class MUser(models.Model):
     class Meta:
         verbose_name = '用户'
         verbose_name_plural = "用户"
-    
+
+class MStock(models.Model):
+    stock_code = models.CharField(max_length=10,verbose_name='股票代码',null=True,blank=True)
+    stock_name = models.CharField(max_length=50,verbose_name='股票名称',null=True,blank=True)
+    stock_cprice = models.CharField(max_length=50,verbose_name='当前价格',null=True,blank=True)
+    stock_lprice = models.CharField(max_length=50,verbose_name='昨收价格',null=True,blank=True)
+    stock_followers_count = models.CharField(max_length=50,verbose_name='关注人数',null=True,blank=True)
+    stock_mprice = models.CharField(max_length=50,verbose_name='最高价格',null=True,blank=True)
+    stock_low_price = models.CharField(max_length=50,verbose_name='最低价格',null=True,blank=True)
+    stock_amount_qty = models.CharField(max_length=50,verbose_name='成交量',null=True,blank=True)
+    stock_amount_moneny = models.CharField(max_length=50,verbose_name='成交额',null=True,blank=True)
+    stock_desc = models.TextField(verbose_name='简介',null=True,blank=True)
+    stock_business = models.TextField(verbose_name='业务',null=True,blank=True)
+    stock_pbv = models.CharField(max_length=50,verbose_name='市盈率',null=True,blank=True)
+    stock_pe = models.CharField(max_length=50,verbose_name='市净率',null=True,blank=True)
+    stock_profit = models.CharField(max_length=50,verbose_name='每股收益',null=True,blank=True)
+    stock_assets = models.CharField(max_length=50,verbose_name='每股资产',null=True,blank=True)
+    stock_dividend = models.CharField(max_length=50,verbose_name='每股股息',null=True,blank=True)
+
+    class Meta:
+        verbose_name = '股票'
+        verbose_name_plural = "股票"
+
 class MArticle(models.Model):
     article_title = models.CharField(max_length=400,verbose_name='标题')
     article_content = models.TextField(verbose_name='内容')
