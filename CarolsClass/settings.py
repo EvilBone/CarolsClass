@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'wechat',
+    'djcelery',
+
 ]
 
 MIDDLEWARE = [
@@ -127,3 +129,12 @@ TEMPLATE_DIRS = (os.path.join(BASE_DIR,  'templates'),)
 
 APP_ID = 'wxb950784440d6b5ab'
 APP_SECRET = '904063a29559a3e14f7f7e121c179f64'
+
+
+import djcelery
+djcelery.setup_loader()
+
+BROKER_URL = 'redis://127.0.0.1:6379/0'
+CELERY_IMPORTS = ('wechat.task')
+
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
