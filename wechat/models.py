@@ -28,22 +28,30 @@ class MUser(models.Model):
         verbose_name_plural = "用户"
 
 class MStock(models.Model):
+    stock_symbol = models.CharField(max_length=10,verbose_name='股票编码',null=True,blank=True,unique=True)
     stock_code = models.CharField(max_length=10,verbose_name='股票代码',null=True,blank=True)
     stock_name = models.CharField(max_length=50,verbose_name='股票名称',null=True,blank=True)
-    stock_cprice = models.CharField(max_length=50,verbose_name='当前价格',null=True,blank=True)
-    stock_lprice = models.CharField(max_length=50,verbose_name='昨收价格',null=True,blank=True)
-    stock_followers_count = models.CharField(max_length=50,verbose_name='关注人数',null=True,blank=True)
-    stock_mprice = models.CharField(max_length=50,verbose_name='最高价格',null=True,blank=True)
-    stock_low_price = models.CharField(max_length=50,verbose_name='最低价格',null=True,blank=True)
-    stock_amount_qty = models.CharField(max_length=50,verbose_name='成交量',null=True,blank=True)
-    stock_amount_moneny = models.CharField(max_length=50,verbose_name='成交额',null=True,blank=True)
+    stock_market = models.CharField(max_length=10,verbose_name='所属市场',null=True,blank=True)
+    stock_cprice = models.FloatField(verbose_name='当前价格',null=True,blank=True)
+    stock_lprice = models.FloatField(verbose_name='昨收价格',null=True,blank=True)
+    stock_followers_count = models.IntegerField(verbose_name='关注人数',null=True,blank=True)
+    stock_mprice = models.FloatField(verbose_name='最高价格',null=True,blank=True)
+    stock_lowprice = models.FloatField(verbose_name='最低价格',null=True,blank=True)
+    stock_52mprice = models.FloatField(verbose_name='52周最高价',null=True,blank=True)
+    stock_52lowprice = models.FloatField( verbose_name='52周最高价', null=True, blank=True)
+    stock_amount_qty = models.FloatField(verbose_name='成交量',null=True,blank=True)
+    stock_amount_moneny = models.FloatField(verbose_name='成交额',null=True,blank=True)
     stock_desc = models.TextField(verbose_name='简介',null=True,blank=True)
     stock_business = models.TextField(verbose_name='业务',null=True,blank=True)
-    stock_pbv = models.CharField(max_length=50,verbose_name='市盈率',null=True,blank=True)
-    stock_pe = models.CharField(max_length=50,verbose_name='市净率',null=True,blank=True)
-    stock_profit = models.CharField(max_length=50,verbose_name='每股收益',null=True,blank=True)
-    stock_assets = models.CharField(max_length=50,verbose_name='每股资产',null=True,blank=True)
-    stock_dividend = models.CharField(max_length=50,verbose_name='每股股息',null=True,blank=True)
+    stock_pbv = models.FloatField(verbose_name='市盈率',null=True,blank=True)
+    stock_pe = models.FloatField(verbose_name='市净率',null=True,blank=True)
+    stock_profit = models.FloatField(verbose_name='每股收益',null=True,blank=True)
+    stock_assets = models.FloatField(verbose_name='每股资产',null=True,blank=True)
+    stock_dividend = models.FloatField(verbose_name='每股股息',null=True,blank=True)
+    stock_stock_marketcapital = models.FloatField(verbose_name='市值',null=True,blank=True)
+    stock_change = models.FloatField(verbose_name='涨跌额',null=True,blank=True)
+    stock_percent = models.FloatField(verbose_name='涨跌幅',null=True,blank=True)
+
 
     class Meta:
         verbose_name = '股票'

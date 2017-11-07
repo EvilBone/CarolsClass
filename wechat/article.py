@@ -24,9 +24,10 @@ class User:
 
 
 class Stock:
-    def __init__(self, code='', name='', cprice=0, lprice=0, followers_count=0, mprice=0, low_price=0, amount_qty=0,
+    def __init__(self,symbol ='', code='', name='', cprice=0, lprice=0, followers_count=0, mprice=0, low_price=0, amount_qty=0,
                  amount_moneny=0,description='', business='', pbv=0, pe=0, profit=0, assets=0,
-                 dividend=0):
+                 dividend=0,high52w=0,low52w=0,change=0,market='',marketcapital=0,percent=0):
+        self.stock_symbol = symbol
         self.stock_code = code
         self.stock_name = name
         self.stock_cprice = cprice
@@ -43,6 +44,12 @@ class Stock:
         self.stock_profit = profit
         self.stock_assets = assets
         self.stock_dividend = dividend
+        self.stock_high52w = high52w
+        self.stock_low52w = low52w
+        self.stock_change = change
+        self.stock_market = market
+        self.stock_marketcapital = marketcapital
+        self.stock_percent = percent
 
     def stock_amplitude(self):
         if self.stock_lprice != 0:

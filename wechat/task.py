@@ -1,11 +1,16 @@
-from celery import task
+from wechat.mylog import logging
+
+from celery import task, platforms
 
 from wechat.models import MUser
-from wechat.snowball import get_friends, save_to_users
+from wechat.snowball import get_friends, save_to_users, get_users_stock, save_to_stocks
 
-
+logger = logging.getLogger('task')
+platforms.C_FORCE_ROOT = True
 @task
 def spider_users():
+
+    logger.info("task spider_users Start...")
     musers = MUser.objects.all()
     # MUser.objects.filter(user_is_deal=False)
     if len(musers) == 0:
@@ -25,3 +30,14 @@ def spider_users():
                     print(f_user.user_name)
                 else:
                     exit()
+    logger.info("task spider_users End...")
+
+@task
+def spider_stocks():
+    logger.info("task spider_stocks Start...")
+    musers = MUser.objects.all()
+    if len(musers) != 0:
+        for muser in musers:
+            stocks = get_users_stock(muser.user_id)
+            save_to_stocks(stocks=stocks)
+    logger.info("task spider_stocks End...")
