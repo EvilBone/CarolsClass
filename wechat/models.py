@@ -57,6 +57,36 @@ class MStock(models.Model):
         verbose_name = '股票'
         verbose_name_plural = "股票"
 
+class MStock_His(models.Model):
+    his_stock_symbol = models.CharField(max_length=10, verbose_name='股票编码', null=True, blank=True)
+    his_stock_code = models.CharField(max_length=10, verbose_name='股票代码', null=True, blank=True)
+    his_stock_name = models.CharField(max_length=50, verbose_name='股票名称', null=True, blank=True)
+    his_stock_market = models.CharField(max_length=10, verbose_name='所属市场', null=True, blank=True)
+    his_stock_cprice = models.FloatField(verbose_name='当前价格', null=True, blank=True)
+    his_stock_lprice = models.FloatField(verbose_name='昨收价格', null=True, blank=True)
+    his_stock_followers_count = models.IntegerField(verbose_name='关注人数', null=True, blank=True)
+    his_stock_mprice = models.FloatField(verbose_name='最高价格', null=True, blank=True)
+    his_stock_lowprice = models.FloatField(verbose_name='最低价格', null=True, blank=True)
+    his_stock_52mprice = models.FloatField(verbose_name='52周最高价', null=True, blank=True)
+    his_stock_52lowprice = models.FloatField(verbose_name='52周最高价', null=True, blank=True)
+    his_stock_amount_qty = models.FloatField(verbose_name='成交量', null=True, blank=True)
+    his_stock_amount_moneny = models.FloatField(verbose_name='成交额', null=True, blank=True)
+    his_stock_desc = models.TextField(verbose_name='简介', null=True, blank=True)
+    his_stock_business = models.TextField(verbose_name='业务', null=True, blank=True)
+    his_stock_pbv = models.FloatField(verbose_name='市盈率', null=True, blank=True)
+    his_stock_pe = models.FloatField(verbose_name='市净率', null=True, blank=True)
+    his_stock_profit = models.FloatField(verbose_name='每股收益', null=True, blank=True)
+    his_stock_assets = models.FloatField(verbose_name='每股资产', null=True, blank=True)
+    his_stock_dividend = models.FloatField(verbose_name='每股股息', null=True, blank=True)
+    his_stock_stock_marketcapital = models.FloatField(verbose_name='市值', null=True, blank=True)
+    his_stock_change = models.FloatField(verbose_name='涨跌额', null=True, blank=True)
+    his_stock_percent = models.FloatField(verbose_name='涨跌幅', null=True, blank=True)
+    his_stock_date = models.DateField(verbose_name='日期',null=True,blank=True,auto_now_add=True)
+
+    class Meta:
+        verbose_name = '股票历史'
+        verbose_name_plural = "股票历史"
+
 class MArticle(models.Model):
     article_title = models.CharField(max_length=400,verbose_name='标题')
     article_content = models.TextField(verbose_name='内容')

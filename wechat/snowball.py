@@ -55,7 +55,7 @@ def get_friends(users, user_id, page):
     return users
 
 
-def get_stocks(stocks=[], page=1, pages=61):
+def get_stocks_hs(stocks=[], page=1, pages=61):
     # print("page: %d" % page)
     stockurl = 'https://xueqiu.com/stock/cata/stocklist.json'
     try:
@@ -64,7 +64,7 @@ def get_stocks(stocks=[], page=1, pages=61):
         raw_cotent = resp.text
         json_content = simplejson.loads(raw_cotent)
         count = json_content["count"]
-        stock_count = count["count"]
+        # stock_count = count["count"]
         json_stocks = json_content["stocks"]
         # print("json_stocks: %d" %len(json_stocks))
         for json_stock in json_stocks:
@@ -83,14 +83,11 @@ def get_stocks(stocks=[], page=1, pages=61):
             stock.stock_low52w = json_stock["low52w"]
             stock.stock_marketcapital = json_stock["marketcapital"]
             stock.stock_percent = json_stock["percent"]
-            if json_stock["type"] == "11":
-                stock.stock_market = '深市'
-            if json_stock["type"] == "12":
-                stock.stock_market = '沪市'
+            stock.stock_market = '沪深'
             stocks.append(stock)
         page += 1
         if page <= pages:
-            stocks = get_stocks(stocks=stocks, page=page, pages=pages)
+            stocks = get_stocks_hs(stocks=stocks, page=page, pages=pages)
     except Exception as e:
         logger.error(e)
     return stocks
@@ -107,39 +104,52 @@ def get_article(url):
     article.articl_url = url
     return article
 
+def get_stock_hs(stockid):
+    url = 'https://xueqiu.com/S/'+stockid
+    resp = requests.get(url=url,headers=headers)
+    soup = bsp(resp.text,'lxml')
+    stock = Stock()
+
+
 
 def save_to_stocks(stocks):
-    mstocks = []
     for stock in stocks:
-        if not MStock.objects.filter(stock_symbol=stock.stock_symbol).exists():
-            # try:
-            mstock = MStock()
-            mstock.stock_symbol = stock.stock_symbol
-            mstock.stock_code = stock.stock_code
-            mstock.stock_name = stock.stock_name
-            mstock.stock_mprice = stock.stock_mprice
-            mstock.stock_lowprice = stock.stock_low_price
-            mstock.stock_cprice = stock.stock_cprice
-            mstock.stock_amount_qty = 0 if stock.stock_amount_qty == '' else stock.stock_amount_qty
-            mstock.stock_amount_moneny = 0 if stock.stock_amount_moneny == '' else stock.stock_amount_moneny
-            mstock.stock_market = stock.stock_market
-            mstock.stock_52lowprice = stock.stock_low52w
-            mstock.stock_52mprice = stock.stock_high52w
-            mstock.stock_stock_marketcapital = 0 if stock.stock_marketcapital == '' else stock.stock_marketcapital
-            mstock.stock_pbv = 0 if stock.stock_pbv == '' else stock.stock_pbv
-            mstock.stock_change = 0 if stock.stock_change =='' else stock.stock_change
-            mstock.stock_percent = 0 if stock.stock_percent=='' else stock.stock_percent
-
-                # mstocks.append(mstock)
-                # print(mstock.stock_symbol)
-            print("symbol: %s" % mstock.stock_symbol)
-            mstock.save()
-            # except Exception as e:
-            #     logger.error(e)
-    # print(len(mstocks))
-    # if len(mstocks)>0:
-    #     MStock.objects.bulk_create(mstocks)
-    return len(mstocks)
+        try:
+            if not MStock.objects.filter(stock_symbol=stock.stock_symbol).exists():
+                mstock = MStock()
+                mstock.stock_symbol = stock.stock_symbol
+                mstock.stock_code = stock.stock_code
+                mstock.stock_name = stock.stock_name
+                mstock.stock_mprice = stock.stock_mprice
+                mstock.stock_lowprice = stock.stock_low_price
+                mstock.stock_cprice = stock.stock_cprice
+                mstock.stock_amount_qty = 0 if stock.stock_amount_qty == '' else stock.stock_amount_qty
+                mstock.stock_amount_moneny = 0 if stock.stock_amount_moneny == '' else stock.stock_amount_moneny
+                mstock.stock_market = stock.stock_market
+                mstock.stock_52lowprice = stock.stock_low52w
+                mstock.stock_52mprice = stock.stock_high52w
+                mstock.stock_stock_marketcapital = 0 if stock.stock_marketcapital == '' else stock.stock_marketcapital
+                mstock.stock_pbv = 0 if stock.stock_pbv == '' else stock.stock_pbv
+                mstock.stock_change = 0 if stock.stock_change =='' else stock.stock_change
+                mstock.stock_percent = 0 if stock.stock_percent=='' else stock.stock_percent
+                mstock.save()
+            else:
+                mstock = MStock.objects.get(stock_symbol=stock.stock_symbol)
+                mstock.stock_mprice = stock.stock_mprice
+                mstock.stock_lowprice = stock.stock_low_price
+                mstock.stock_cprice = stock.stock_cprice
+                mstock.stock_amount_qty = 0 if stock.stock_amount_qty == '' else stock.stock_amount_qty
+                mstock.stock_amount_moneny = 0 if stock.stock_amount_moneny == '' else stock.stock_amount_moneny
+                mstock.stock_52lowprice = stock.stock_low52w
+                mstock.stock_52mprice = stock.stock_high52w
+                mstock.stock_stock_marketcapital = 0 if stock.stock_marketcapital == '' else stock.stock_marketcapital
+                mstock.stock_pbv = 0 if stock.stock_pbv == '' else stock.stock_pbv
+                mstock.stock_change = 0 if stock.stock_change == '' else stock.stock_change
+                mstock.stock_percent = 0 if stock.stock_percent == '' else stock.stock_percent
+                mstock.save()
+        except Exception as e:
+            logger.error(e)
+    return 1
 
 
 def save_to_users(users):
