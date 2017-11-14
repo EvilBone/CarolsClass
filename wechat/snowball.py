@@ -105,15 +105,38 @@ def get_article(url):
     return article
 
 def get_stock_hs(stockid):
-    url = 'https://xueqiu.com/S/'+stockid
-    resp = requests.get(url=url,headers=headers)
-    soup = bsp(resp.text,'lxml')
-    stock = Stock()
 
+    try:
+        stock = Stock()
+        url = 'https://xueqiu.com/S/'+stockid
+        resp = requests.get(url=url,headers=headers)
+        soup = bsp(resp.text,'lxml')
+        stock.stock_symbol = stockid
+        stock.stock_code = stockid[-1:-6]
+        stock.stock_pbv= soup.find(text=re.compile("市净率")).parent.find('span').text
+        stock.stock_assets = soup.find(text=re.compile("每股净资产")).parent.find('span').text
+        stock.stock_profit = soup.find(text=re.compile("每股收益")).parent.find('span').text
+        stock.stock_desc = soup.find(class_='widget-content stock-profile').text
+        stock.stock_business = soup.findAll(class_='widget-content')[-1].text
+    except Exception as e:
+        print("%s " % stockid)
 
+    return stock
+
+def update_stocks():
+    mstocks  = MStock.objects.all()
+    for mstock in mstocks:
+        stock = get_stock_hs(mstock.stock_symbol)
+        mstock.stock_pbv = 0 if stock.stock_pbv=='' or  stock.stock_pbv=='-' else stock.stock_pbv
+        mstock.stock_assets = 0 if stock.stock_assets=='' or  stock.stock_assets=='-' else stock.stock_assets
+        mstock.stock_profit = 0 if stock.stock_profit=='' or  stock.stock_profit=='-' else  stock.stock_profit
+        mstock.stock_desc = stock.stock_desc
+        mstock.stock_business = stock.stock_business
+        mstock.save()
 
 def save_to_stocks(stocks):
     for stock in stocks:
+        print("stock : %s" % stock.stock_symbol)
         try:
             if not MStock.objects.filter(stock_symbol=stock.stock_symbol).exists():
                 mstock = MStock()
@@ -123,7 +146,7 @@ def save_to_stocks(stocks):
                 mstock.stock_mprice = stock.stock_mprice
                 mstock.stock_lowprice = stock.stock_low_price
                 mstock.stock_cprice = stock.stock_cprice
-                mstock.stock_amount_qty = 0 if stock.stock_amount_qty == '' else stock.stock_amount_qty
+                mstock.stock_amount_qty = 0 if stock.stock_amount_qty == ''  else stock.stock_amount_qty
                 mstock.stock_amount_moneny = 0 if stock.stock_amount_moneny == '' else stock.stock_amount_moneny
                 mstock.stock_market = stock.stock_market
                 mstock.stock_52lowprice = stock.stock_low52w
@@ -146,6 +169,7 @@ def save_to_stocks(stocks):
                 mstock.stock_pbv = 0 if stock.stock_pbv == '' else stock.stock_pbv
                 mstock.stock_change = 0 if stock.stock_change == '' else stock.stock_change
                 mstock.stock_percent = 0 if stock.stock_percent == '' else stock.stock_percent
+                mstock.stock_market = stock.stock_market
                 mstock.save()
         except Exception as e:
             logger.error(e)
@@ -170,34 +194,41 @@ def save_to_users(users):
         MUser.objects.bulk_create(musers)
     return len(musers)
 
+def save_to_his():
+    stocks = MStock.objects.all()
+    for stock in stocks:
+        hstock = MStock_His()
+        hstock.his_stock_52lowprice = stock.stock_52lowprice
+        hstock.his_stock_52mprice = stock.stock_52mprice
+        hstock.his_stock_amount_moneny = stock.stock_amount_moneny
+        hstock.his_stock_amount_qty = stock.stock_amount_qty
+        hstock.his_stock_assets = stock.stock_assets
+        hstock.his_stock_change = stock.stock_change
+        hstock.his_stock_code = stock.stock_code
+        hstock.his_stock_cprice = stock.stock_cprice
+        hstock.his_stock_dividend = stock.stock_dividend
+        hstock.his_stock_followers_count = stock.stock_followers_count
+        hstock.his_stock_lowprice = stock.stock_lowprice
+        hstock.his_stock_lprice = stock.stock_lprice
+        hstock.his_stock_mprice = stock.stock_mprice
+        hstock.his_stock_pbv = stock.stock_pbv
+        hstock.his_stock_pe = stock.stock_pe
+        hstock.his_stock_name = stock.stock_name
+        hstock.his_stock_business = stock.stock_business
+        hstock.his_stock_desc = stock.stock_desc
+        hstock.his_stock_market = stock.stock_market
+        hstock.his_stock_percent = stock.stock_percent
+        hstock.his_stock_profit = stock.stock_profit
+        hstock.his_stock_stock_marketcapital = stock.stock_stock_marketcapital
+        hstock.his_stock_symbol = stock.stock_symbol
+        hstock.save()
 
 if __name__ == '__main__':
-    # url = 'https://xueqiu.com/S/SH600846'
-    stocks = get_stocks()
-
-    rows = save_to_stocks(stocks=stocks)
-    # print(len(stocks))
-
-    # musers = MUser.objects.all()
-    # if len(musers) != 0:
-    #     for muser in musers:
-    #         stocks = get_users_stock(muser.user_id)
-    #         save_to_stocks(stocks=stocks)
-
-    # if len(musers) == 0:
-    #     users = []
-    #     users = get_friends(users, '3037882447', 1)
-    #     save_to_users(users)
-    # else:
-    #     while True:
-    #         f_users = MUser.objects.filter(user_is_deal=False)
-    #         if len(f_users) > 0:
-    #             for f_user in f_users:
-    #                 users = []
-    #                 users = get_friends(users, f_user.user_id, 1)
-    #                 save_to_users(users)
-    #                 f_user.user_is_deal = True
-    #                 f_user.save()
-    #                 print(f_user.user_name)
-    #             else:
-    #                 exit()
+    print("task spider_stocks Start...")
+    # stocks = get_stocks_hs()
+    # save_to_stocks(stocks=stocks)
+    update_stocks()
+    print("task spider_stocks End...")
+    print("task save_his Start...")
+    save_to_his()
+    print("task save_his End...")

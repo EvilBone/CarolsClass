@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'wechat',
     'djcelery',
+    'ckeditor',
+    'ckeditor_uploader'
 ]
 
 MIDDLEWARE = [
@@ -129,7 +131,14 @@ STATIC_ROOT = 'static'
 
 TEMPLATE_DIRS = (os.path.join(BASE_DIR,  'templates'),)
 
+CKEDITOR_JQUERY_URL = '//cdn.bootcss.com/jquery/1.11.3/jquery.min.js'
+CKEDITOR_UPLOAD_PATH = "uploads"
 
+CKEDITOR_CONFIGS = {
+'default': {
+'toolbar': 'Basic',
+},
+}
 APP_ID = 'wxb950784440d6b5ab'
 APP_SECRET = '904063a29559a3e14f7f7e121c179f64'
 

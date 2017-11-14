@@ -3,13 +3,15 @@ from wechat.mylog import logging
 from celery import task, platforms
 
 from wechat.models import MUser, MStock, MStock_His
-from wechat.snowball import get_friends, save_to_users, get_users_stock, save_to_stocks, get_stocks
+from wechat.snowball import get_friends, save_to_users, save_to_stocks, update_stocks, \
+    get_stocks_hs
 
 logger = logging.getLogger('task')
 platforms.C_FORCE_ROOT = True
+
+
 @task
 def spider_users():
-
     logger.info("task spider_users Start...")
     musers = MUser.objects.all()
     # MUser.objects.filter(user_is_deal=False)
@@ -32,12 +34,15 @@ def spider_users():
                     exit()
     logger.info("task spider_users End...")
 
+
 @task
 def spider_stocks():
     logger.info("task spider_stocks Start...")
-    stocks = get_stocks()
+    stocks = get_stocks_hs()
     save_to_stocks(stocks=stocks)
+    update_stocks()
     logger.info("task spider_stocks End...")
+
 
 @task
 def save_to_his():
