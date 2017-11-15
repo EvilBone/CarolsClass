@@ -11,4 +11,6 @@ def index(request):
 
 def blog(request, blog_id):
     blog = Blog.objects.get(id=blog_id)
+    blog.blog_views += 1
+    blog.save()
     return render(request, 'blog.html', {'blog': blog})
