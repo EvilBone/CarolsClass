@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'wechat',
+    'blog',
     'djcelery',
     'ckeditor',
     'ckeditor_uploader'
@@ -136,7 +137,7 @@ CKEDITOR_UPLOAD_PATH = "uploads"
 
 CKEDITOR_CONFIGS = {
 'default': {
-'toolbar': 'Basic',
+'toolbar': 'full',
 },
 }
 APP_ID = 'wxb950784440d6b5ab'

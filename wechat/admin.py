@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import MUser, MStock, MStock_His, Blog
+from .models import MUser, MStock, MStock_His
 
 
 # Register your models here.
@@ -32,11 +32,8 @@ class HisMStockAdmin(admin.ModelAdmin):
     list_filter = ('his_stock_market',)
     date_hierarchy = 'his_stock_date'
 
-class BloagAdmin(admin.ModelAdmin):
-    list_display = ('blog_title','blog_author')
 
 
 admin.site.register(MUser, MUserAdmin)
 admin.site.register(MStock, MStockAdmin)
 admin.site.register(MStock_His, HisMStockAdmin)
-admin.site.register(Blog,BloagAdmin)
