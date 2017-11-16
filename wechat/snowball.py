@@ -9,6 +9,9 @@ from bs4 import BeautifulSoup as bsp
 from wechat.article import Article, User, Stock
 import os, django
 
+import time
+from threading import Timer
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "CarolsClass.settings")
 django.setup()
 from wechat.models import MUser, MArticle, MStock
@@ -25,6 +28,9 @@ headers = {"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,imag
            "Upgrade-Insecure-Requests": "1",
            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.62 Safari/537.36"}
 
+
+def print_time(enter_time):
+    print("now is", time.time(), "enter_the_box_time is", enter_time)
 
 def get_friends(users, user_id, page):
     url = 'https://xueqiu.com/friendships/groups/members.json'

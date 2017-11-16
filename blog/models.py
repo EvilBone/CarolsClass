@@ -6,7 +6,7 @@ class Blog(models.Model):
     blog_author = models.CharField(max_length=100,verbose_name='作者')
     blog_content = RichTextField(verbose_name='内容')
     blog_datetime = models.DateTimeField(verbose_name='更新时间',auto_now=True)
-    blog_createtime = models.DateTimeField(verbose_name='创建时间',auto_created=True)
+    blog_createtime = models.DateTimeField(verbose_name='创建时间',auto_now_add=True)
     blog_views = models.IntegerField(verbose_name='浏览次数',default=0)
 
     class Meta:

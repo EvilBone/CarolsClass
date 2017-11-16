@@ -33,7 +33,8 @@ class HisMStockAdmin(admin.ModelAdmin):
     date_hierarchy = 'his_stock_date'
 
 
-
+admin.site.site_header = '木骨'
+admin.site.site_title = '木骨'
 admin.site.register(MUser, MUserAdmin)
 admin.site.register(MStock, MStockAdmin)
 admin.site.register(MStock_His, HisMStockAdmin)
