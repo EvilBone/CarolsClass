@@ -27,7 +27,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'eo2da!s0ne3^g7-tbw(3)om3rc9!@tt3d_0j_8x#jdn#nh!u5!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'wechat',
     'blog',
+    'stock',
     'timertask',
     'djcelery',
     'ckeditor',

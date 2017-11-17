@@ -1,13 +1,12 @@
 import time
 
-from wechat.mylog import logging
-
 from celery import task, platforms
 
-from wechat.models import MUser, MStock, MStock_His
-from wechat.snowball import get_friends, save_to_users, save_to_stocks, update_stocks, \
+from stock.snowball import get_friends, save_to_users, save_to_stocks, update_stocks, \
     get_stocks_hs
-from timertask.models import MScheLog, MSche, MTask
+from timertask.models import MScheLog, MTask
+from wechat.models import MUser, MStock, MStock_His
+from wechat.mylog import logging
 
 logger = logging.getLogger('task')
 platforms.C_FORCE_ROOT = True
