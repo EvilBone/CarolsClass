@@ -37,18 +37,36 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'xadmin',
+    'crispy_forms',
+    'reversion',
     'wechat',
     'blog',
     'stock',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.weibo',
     'timertask',
     'djcelery',
     'ckeditor',
-    'ckeditor_uploader'
+    'ckeditor_uploader',
 ]
+
+SITE_ID = 1
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -59,6 +77,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 
 ROOT_URLCONF = 'CarolsClass.urls'
 
@@ -153,3 +172,9 @@ BROKER_URL = 'redis://127.0.0.1:6379/0'
 CELERY_IMPORTS = ('wechat.task')
 
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+
+
+EMAIL_HOST = 'smtp.163.com'
+EMAIL_HOST_USER = 'mboneauto@163.com'
+EMAIL_HOST_PASSWORD = 'lvSaner2017'
+EMAIL_PORT = 25

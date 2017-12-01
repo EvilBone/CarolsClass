@@ -7,6 +7,9 @@
           <mappings>
             <mapping deploy="/root/CarolsClass" local="$PROJECT_DIR$" web="/" />
           </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/db.sqlite3" />
+          </excludedPaths>
         </serverdata>
       </paths>
       <paths name="pi">

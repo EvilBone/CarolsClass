@@ -5,9 +5,8 @@ from blog.models import Blog
 
 
 def index(request):
-    blogs = Blog.objects.order_by('-blog_createtime').all()
+    blogs = Blog.objects.order_by('-blog_createtime').filter(blog_status=2)
     return render(request, 'home.html', {'blogs': blogs})
-
 
 def blog(request, blog_id):
     blog = Blog.objects.get(id=blog_id)
