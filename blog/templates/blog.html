@@ -1,18 +1,107 @@
 {% extends 'base.html' %}
 {% block title %}骨鱼{% endblock %}
 {% block content %}
-    <div class="container-fluid" style="padding-top: 50px">
-    <div class="row">
-        <div class="panel panel-default col-lg-9 col-lg-offset-1">
-            <div class="panel-body">
-                <h4><strong>{{ blog.blog_title }}</strong></h4>
-                <div class="row" style="margin-top: 20px">
-                    <div class="col-lg-6" ><small>{{ blog.blog_createtime }}&nbsp;&nbsp;</small>|&nbsp;&nbsp;<small>{{ blog.blog_author }}</small></div>
+    <div class="container-fluid" style="padding-top: 50px" xmlns="http://www.w3.org/1999/html">
+        <div class="row">
+            <div class="panel panel-default col-lg-9 " style="margin-left: 30px">
+                <div class="panel-body">
+                    <h4><strong>{{ blog.blog_title }}</strong></h4>
+                    <div class="row" style="margin-top: 20px">
+                        <div class="col-lg-6">
+                            <small>{{ blog.blog_createtime }}&nbsp;&nbsp;</small>
+                            |&nbsp;&nbsp;<small>{{ blog.blog_author }}</small>
+                        </div>
+                    </div>
+                    <hr style="margin-top: 5px;">
+                    {{ blog.blog_content | safe }}
                 </div>
-                <hr style="margin-top: 5px;">
-                {{ blog.blog_content | safe }}
             </div>
-        </div>
+            {% if comments %}
+                <div class="panel panel-default col-lg-9 " style="margin-top: 0px;margin-left: 30px">
+                    <div class="panel-body">
+                        <h5><strong>所有评论</strong></h5>
+                        <hr style="margin-top: 5px;">
+                        <ul class="list-unstyled">
+                            {% for comm in comments %}
+                                <li class="container-fluid " style="padding: 0px">
+                                    <div class="col-md-1 text-right" style="padding: 3px">
+                                        {% if comm.user.socialaccount_set.exists %}
+                                            <img width="40" height="40"
+                                                 src="{{ comm.user.socialaccount_set.all.0.get_avatar_url }}"
+                                                 class="img-circle"
+                                                 alt="Responsive image">
+                                        {% else %}
+                                            <!--这个 是调用本地账户的头像-->
+                                            <img width="40" height="40"
+                                                 src="{{ comm.user.avatar.url }}"
+                                                 class="img-circle"
+                                                 alt="Responsive image">
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-lg-11" style="padding: 0px">
+                                        <div class="col-lg-5"><strong>{{ comm.user.username }}</strong>
+                                            </div>
+                                        <div class="col-lg-7">
+                                            <p class="text-right">
+                                                <small>{{ comm.comment_ctime }}</small>
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-12">
+                                        {{ comm.content|safe }}
+                                        </div>
+                                        <div>
+                                            <p class="text-right" style="padding-right: 30px">
+                                                <a>回复</a>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </li>
+                                <hr style="margin-top: 3px;">
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="panel panel-default col-lg-9 " style="margin-top: 0px;margin-left: 30px">
+                <div class="panel-body">
+                    <h5><strong>发表评论</strong></h5>
+                    <hr style="margin-top: 5px;">
+                    <form class="form-horizontal" action="{% url 'add_comment' %}" method="post">
+                        <div class="form-group">
+                            <!--判断当前用户是社会账号还是本地账号 调用不同头像-->
+                            <div class="container-fluid" style="padding: 10px">
+                                {% if user.is_authenticated %}
+                                    {% if user.socialaccount_set.exists %}
+                                        <img width="40" height="40"
+                                             src="{{ user.socialaccount_set.all.0.get_avatar_url }}"
+                                             class="img-circle"
+                                             alt="Responsive image">&nbsp;&nbsp;<strong>{{ user.username }}</strong>
+                                        </div>
+                                    {% else %}
+                                        <!--这个 是调用本地账户的头像-->
+                                        <img width="40" height="40"
+                                             src="{{ user.avatar.url }}"
+                                             class="img-circle"
+                                             alt="Responsive image">&nbsp;
+                                        &nbsp;<strong>{{ user.username }}</strong>
+                                    {% endif %}
+                                    </div>
+                                    {% csrf_token %}
+                                    <input name="blog_id" value="{{ blog.id }}" hidden="hidden">
+                                    {{ commentform.com_content }}
+                                    <div style="padding-top: 10px;">
+                                        <button class="btn btn-primary">发表评论</button>
+                                    </div>
+                                {% else %}
+                                    <div style="padding-top: 10px;">
+                                        <a class="btn btn-primary" href="/accounts/login">登录</a>
+                                    </div>
+                                {% endif %}
+
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

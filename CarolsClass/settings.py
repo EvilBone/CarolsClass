@@ -42,9 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'xadmin',
-    'crispy_forms',
-    'reversion',
+    # 'xadmin',
+    # 'crispy_forms',
+    # 'reversion',
     'wechat',
     'blog',
     'stock',
@@ -105,10 +105,24 @@ WSGI_APPLICATION = 'CarolsClass.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'carolsclass',  # 数据库名
+        'USER': 'root',  # 用户名
+        'PASSWORD': 'hujie2007',  # 密码
+        'HOST': 'localhost',  # 数据库主机，默认为localhost
+        'PORT': '3306',
+        'OPTIONS': {
+             'autocommit': True,
+        },
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 
 # Password validation
@@ -156,11 +170,7 @@ TEMPLATE_DIRS = (os.path.join(BASE_DIR,  'templates'),)
 CKEDITOR_JQUERY_URL = '//cdn.bootcss.com/jquery/1.11.3/jquery.min.js'
 CKEDITOR_UPLOAD_PATH = "uploads"
 
-CKEDITOR_CONFIGS = {
-'default': {
-'toolbar': 'full',
-},
-}
+
 APP_ID = 'wxb950784440d6b5ab'
 APP_SECRET = '904063a29559a3e14f7f7e121c179f64'
 
@@ -173,7 +183,7 @@ CELERY_IMPORTS = ('wechat.task')
 
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 
-
+LOGIN_REDIRECT_URL = '/'
 EMAIL_HOST = 'smtp.163.com'
 EMAIL_HOST_USER = 'mboneauto@163.com'
 EMAIL_HOST_PASSWORD = 'lvSaner2017'

@@ -21,7 +21,7 @@ class MSche(models.Model):
         ('S', 'stop'),
         ('F', 'finish'),
     )
-    task = models.ForeignKey(MTask)
+    task = models.ForeignKey(MTask,on_delete=True)
     sche_excute_time = models.TimeField(verbose_name='运行时间')
     sche_isacive = models.BooleanField(verbose_name='是否启用', default=True)
     sche_status = models.CharField(max_length=20,verbose_name='状态',default='waiting')
@@ -34,7 +34,7 @@ class MSche(models.Model):
         verbose_name_plural = '执行计划'
 
 class MScheLog(models.Model):
-    ms_task = models.ForeignKey(MTask)
+    ms_task = models.ForeignKey(MTask,on_delete=True)
     ms_start_time = models.DateTimeField(verbose_name='开始时间')
     ms_end_time = models.DateTimeField(verbose_name='结束时间')
     ms_message = models.TextField(verbose_name='日志内容')
