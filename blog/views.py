@@ -22,10 +22,11 @@ def add_comment(request):
     if request.method =='POST':
         blog_id = request.POST.get('blog_id')
         content = request.POST.get('com_content')
-        comments = Comment()
-        comments.blog_id = blog_id
-        comments.content = content
-        comments.user = request.user
-        comments.save()
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+        if content!=None or content!='':
+            comments = Comment()
+            comments.blog_id = blog_id
+            comments.content = content
+            comments.user = request.user
+            comments.save()
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
