@@ -43,6 +43,10 @@ class Comment(models.Model):
     parent_comm = models.ForeignKey('self',verbose_name='父评论',default=1,on_delete=True)
     content = models.TextField(verbose_name='内容')
 
+    def children(self):
+        list = Comment.objects.filter(parent_comm=self)
+        return list
+
     class Meta:
         verbose_name = '评论'
         verbose_name_plural='评论'

@@ -40,26 +40,68 @@
                                     </div>
                                     <div class="col-lg-11" style="padding: 0px">
                                         <div class="col-lg-5"><strong>{{ comm.user.username }}</strong>
-                                            </div>
+                                        </div>
                                         <div class="col-lg-7">
                                             <p class="text-right">
                                                 <small>{{ comm.comment_ctime }}</small>
                                             </p>
                                         </div>
                                         <div class="col-lg-12">
-                                        {{ comm.content|safe }}
+                                            {{ comm.content|safe }}
                                         </div>
                                         <div>
                                             <p class="text-right" style="padding-right: 30px">
-                                                <a>回复</a>
+                                                <a href="#" id="{{ comm.id }}" name="{{ comm.user.username }}">回复</a>
                                             </p>
                                         </div>
                                     </div>
 
                                 </li>
+                                {% if comm.children %}
+                                    <ul class="list-unstyled">
+                                    {% for comm in comm.childre %}
+                                        <li class="container-fluid " style="padding: 0px">
+                                            <div class="col-md-1 text-right" style="padding: 3px">
+                                                {% if comm.user.socialaccount_set.exists %}
+                                                    <img width="40" height="40"
+                                                         src="{{ comm.user.socialaccount_set.all.0.get_avatar_url }}"
+                                                         class="img-circle"
+                                                         alt="Responsive image">
+                                                {% else %}
+                                                    <!--这个 是调用本地账户的头像-->
+                                                    <img width="40" height="40"
+                                                         src="{{ comm.user.avatar.url }}"
+                                                         class="img-circle"
+                                                         alt="Responsive image">
+                                                {% endif %}
+                                            </div>
+                                            <div class="col-lg-11" style="padding: 0px">
+                                                <div class="col-lg-5"><strong>{{ comm.user.username }}</strong>
+                                                </div>
+                                                <div class="col-lg-7">
+                                                    <p class="text-right">
+                                                        <small>{{ comm.comment_ctime }}</small>
+                                                    </p>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    {{ comm.content|safe }}
+                                                </div>
+                                                <div>
+                                                    <p class="text-right" style="padding-right: 30px">
+                                                        <a href="#" id="{{ comm.id }}" name="{{ comm.user.username }}">回复</a>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                        </li>
+
+                                        <hr style="margin-top: 3px;">
+                                    {% endfor %}
+                                {% endif %}
+
                                 <hr style="margin-top: 3px;">
                             {% endfor %}
-                        </ul>
+                            </ul>
                     </div>
                 </div>
             {% endif %}
@@ -67,7 +109,7 @@
                 <div class="panel-body">
                     <h5><strong>发表评论</strong></h5>
                     <hr style="margin-top: 5px;">
-                    <form class="form-horizontal" action="{% url 'add_comment' %}" method="post">
+                    <form class="form-horizontal" action="{% url 'add_comment' %}" method="post" id="form1">
                         <div class="form-group">
                             <!--判断当前用户是社会账号还是本地账号 调用不同头像-->
                             <div class="container-fluid" style="padding: 10px">
@@ -89,6 +131,7 @@
                                     </div>
                                     {% csrf_token %}
                                     <input name="blog_id" value="{{ blog.id }}" hidden="hidden">
+                                    <input name="comm_id" hidden="hidden" id="comm_id" value="1">
                                     {{ commentform.com_content }}
                                     <div style="padding-top: 10px;">
                                         <button class="btn btn-primary">发表评论</button>
@@ -104,4 +147,19 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("a").click(function () {
+                var dd = $("#form1").offset().top;
+                alert(this.id)
+                $('#comm_id').val(this.id)
+                CKEDITOR.instances['id_com_content'].setData('@' + this.name)
+
+                $('html, body').animate({
+                    scrollTop: dd
+                }, 2000);
+            });
+        });
+    </script>
 {% endblock %}
+

@@ -19,7 +19,6 @@ import logging.handlers
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -30,7 +29,6 @@ SECRET_KEY = 'eo2da!s0ne3^g7-tbw(3)om3rc9!@tt3d_0j_8x#jdn#nh!u5!'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -45,9 +43,9 @@ INSTALLED_APPS = [
     # 'xadmin',
     # 'crispy_forms',
     # 'reversion',
-    'wechat',
+    # 'wechat',
     'blog',
-    'stock',
+    # 'stock',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -78,7 +76,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-
 ROOT_URLCONF = 'CarolsClass.urls'
 
 TEMPLATES = [
@@ -99,7 +96,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'CarolsClass.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
@@ -112,7 +108,7 @@ DATABASES = {
         'HOST': 'localhost',  # 数据库主机，默认为localhost
         'PORT': '3306',
         'OPTIONS': {
-             'autocommit': True,
+            'autocommit': True,
         },
     }
 }
@@ -143,7 +139,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -157,7 +152,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
@@ -165,7 +159,7 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = 'static'
 
-TEMPLATE_DIRS = (os.path.join(BASE_DIR,  'templates'),)
+TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),)
 
 CKEDITOR_JQUERY_URL = '//cdn.bootcss.com/jquery/1.11.3/jquery.min.js'
 CKEDITOR_UPLOAD_PATH = "uploads"
@@ -174,8 +168,8 @@ CKEDITOR_UPLOAD_PATH = "uploads"
 APP_ID = 'wxb950784440d6b5ab'
 APP_SECRET = '904063a29559a3e14f7f7e121c179f64'
 
-
 import djcelery
+
 djcelery.setup_loader()
 
 BROKER_URL = 'redis://127.0.0.1:6379/0'

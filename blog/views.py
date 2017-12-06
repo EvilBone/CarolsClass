@@ -15,18 +15,23 @@ def blog(request, blog_id):
     blog.blog_views += 1
     blog.save()
     commentform = ComContentForm()
-    comments = Comment.objects.filter(blog=blog).order_by('-comment_ctime')
+    comments = Comment.objects.filter(blog=blog,parent_comm_id=1).order_by('-comment_ctime')
     return render(request, 'blog.html', {'blog': blog,'commentform':commentform,'comments':comments})
 
 def add_comment(request):
     if request.method =='POST':
         blog_id = request.POST.get('blog_id')
         content = request.POST.get('com_content')
+        comm_id = request.POST.get('comm_id')
+        print(comm_id)
+
         if content!=None or content!='':
             comments = Comment()
             comments.blog_id = blog_id
             comments.content = content
             comments.user = request.user
+            comments.parent_comm_id = comm_id
             comments.save()
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
 
