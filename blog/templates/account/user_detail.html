@@ -1,0 +1,21 @@
+{% extends 'account/base.html' %}
+{% load bootstrap_tags %}
+
+{% block content %}
+     <div class="panel-body  col-lg-5 mylogin-box ">
+    <div class="row">
+            <div class="text-left col-lg-6"><h3><strong>个人资料</strong></h3></div>
+        </div>
+          <hr style="padding-top: 0px;margin-top: 0px">
+         <!--用户头像-->
+        <div class="avatar">
+            <img class="img-rounded" src="{{ request.user.avatar.url }}">
+        </div>
+        <form class="profile" method="post" enctype="multipart/form-data"
+        action="{% url 'blog:account_profile' %}">
+        {% csrf_token %}
+        {{ form|as_bootstrap }}
+        <button class="primaryAction" type="submit">更新资料</button>
+    </form>
+     </div>
+{% endblock content %}

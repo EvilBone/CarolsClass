@@ -15,8 +15,10 @@ Including another URLconf
 """
 
 from django.conf.urls import url, include
+from django.conf.urls.static import static
 from django.contrib import admin
 
+from CarolsClass import settings
 from blog import views
 
 urlpatterns = [
@@ -26,4 +28,4 @@ urlpatterns = [
     url(r'^blog/', include('blog.urls')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^accounts/', include('allauth.urls')),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -7,6 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>{% block title %}{% endblock %}</title>
+    <link rel="shortcut icon" href="{% static "images/favicon.ico" %}">
     <link href="{% static "css/bootstrap-table.min.css" %}" rel="stylesheet">
     <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
     <link href="{% static "css/bootstrap-theme.min.css" %}" rel="stylesheet">
@@ -18,11 +19,11 @@
     <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
     <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
 </head>
-<body>
+<body style="background-color: #f6f6f6">
 <nav class="navbar  navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header" style="height:30px">
-            <a class="navbar-brand" href="/" style="height: 30px">骨鱼</a>
+            <a class="navbar-brand" href="/" style="height: 30px">鱼和骨头</a>
         </div>
         <ul class="nav navbar-nav navbar-right">
             {% if  user.is_authenticated %}
@@ -36,11 +37,13 @@
                 </li>
 
             {% else %}
-                <li><a href="/accounts/login" style="color: white;margin-right: 50px" class="login">登录</a></li>
+                <li><a href="/accounts/weibo/login/?process=login" style="color: white;margin-right: 50px" class="login">登录</a></li>
             {% endif %}
         </ul>
     </div>
 
 </nav>
+  <div class="container-fluid" style="padding-top: 50px" xmlns="http://www.w3.org/1999/html">
 {% block content %}(no content){% endblock %}
+  </div>
 </body>

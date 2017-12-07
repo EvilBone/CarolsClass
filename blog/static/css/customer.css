@@ -8,10 +8,10 @@ navbar-nav > li > a {
     padding-top: 10px;
     color: #fff;
 }
-.navbar-brand >a:focus, a:hover {
+
+.navbar-brand > a:focus, a:hover {
     color: #000;
 }
-
 
 .navbar {
     min-height: 40px;
@@ -21,20 +21,39 @@ navbar-nav > li > a {
 .navbar-toggle {
     margin-top: 4px;
     margin-bottom: 4px;
-}  .nav>li>a:focus,.nav>li>a:hover{text-decoration:none;background-color: #2286ee
-   }
+}
 
-   .nav .open>a,.nav .open>a:focus,.nav .open>a:hover{background-color:#337ab7;border-color:#337ab7}
-.list-group-item{
+.nav > li > a:focus, .nav > li > a:hover {
+    text-decoration: none;
+    background-color: #2286ee
+}
+
+.nav .open > a, .nav .open > a:focus, .nav .open > a:hover {
+    background-color: #337ab7;
+    border-color: #337ab7
+}
+
+.list-group-item {
     border: 0px solid #ddd;
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
 }
-.panel{
-    border-radius:0px;
+
+.panel {
+    border-radius: 0px;
 }
+
 .panel-default > .panel-heading {
     color: #333;
     background-color: #fff;
     border-color: #000;
+}
+
+.mylogin-box {
+    background-color: white;
+    box-shadow: 10px 10px 5px #ccc;
+    margin-top: 10px;
+    margin-left: 20px;
+    height: 100%;
+
 }

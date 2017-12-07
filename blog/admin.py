@@ -1,7 +1,9 @@
 from django.contrib import admin
 
 # Register your models here.
-from blog.models import Blog, Category, Comment
+from django.contrib.auth.admin import UserAdmin
+
+from blog.models import Blog, Category, Comment, User
 
 
 class BloagAdmin(admin.ModelAdmin):
@@ -13,9 +15,10 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('parent_comm_id','content')
+    list_display = ('id','parent_comm_id','content')
 
 
 admin.site.register(Blog,BloagAdmin)
 admin.site.register(Category,CategoryAdmin)
 admin.site.register(Comment,CommentAdmin)
+admin.site.register(User, UserAdmin)

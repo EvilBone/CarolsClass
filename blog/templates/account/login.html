@@ -1,0 +1,46 @@
+{% extends "account/base.html" %}
+{% load bootstrap_tags %}
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+    <div class="panel-body  col-lg-5 mylogin-box ">
+        <div class="row">
+            <div class="text-left col-lg-6"><h3><strong>{% trans "Sign In" %}</strong></h3></div>
+            <div class="text-right col-lg-6"style="padding-top: 30px    ">
+                没有账号？请<a href="{{ signup_url }}">注册</a>
+            </div>
+        </div>
+    <hr style="padding-top: 0px;margin-top: 0px">
+        <form class="login" method="POST" action="{% url 'account_login' %}">
+            {% csrf_token %}
+            {{ form|as_bootstrap_inline }}
+            {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+            {% endif %}
+            <div class="row-fluid">
+                <button class="primaryAction btn btn-primary" type="submit">{% trans "Sign In" %}</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="button secondaryAction "
+                   href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+            </div>
+        </form>
+        {% get_providers as socialaccount_providers %}
+
+        {% if socialaccount_providers %}
+        {% else %}
+            <p>{% blocktrans %}If you have not created an account yet, then please
+                <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+        {% endif %}
+        <hr>
+
+        <table class="socialaccount_providers text-right" style="padding-right: 40px">
+            <tr>
+            <h5>第三方登录</h5>
+            {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+            </tr>
+        </table>
+        {% include "socialaccount/snippets/login_extra.html" %}
+    </div>
+{% endblock %}

@@ -1,8 +1,33 @@
 from ckeditor.widgets import CKEditorWidget
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser
 from django.db import models
 from ckeditor.fields import RichTextField
+from imagekit.models import ProcessedImageField
 # Create your models here.
+from pilkit.processors import ResizeToFill
+
+
+class User(AbstractUser):
+    avatar = ProcessedImageField(upload_to='avatar',
+                                 default='avatar/default.png',
+                                 verbose_name='头像',
+                                 #图片将处理成85x85的尺寸
+                                 processors=[ResizeToFill(85,85)],)
+    def __str__(self):
+        return self.username
+
+    def save(self, *args, **kwargs):
+        # 当用户更改头像的时候，avatar.name = '文件名'
+        # 其他情况下avatar.name = 'upload_to/文件名'
+        if len(self.avatar.name.split('/')) == 1:
+            # print('before:%s' % self.avatar.name)
+            # 用户上传图片时，将avatar.name改为 用户名/文件名
+            self.avatar.name = self.username + '/' + self.avatar.name
+        super(User, self).save()
+        # 调用父类的save()方法后，avatar.name就变成了'upload_to/用户名/文件名'
+        # print('after:%s' % self.avatar.name)
+        # print('avatar_path: %s' % self.avatar.path)
+
 
 class Category(models.Model):
     name = models.CharField(max_length=200,verbose_name='标签')
@@ -50,4 +75,5 @@ class Comment(models.Model):
     class Meta:
         verbose_name = '评论'
         verbose_name_plural='评论'
+
 

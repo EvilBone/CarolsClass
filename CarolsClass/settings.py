@@ -40,20 +40,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'xadmin',
-    # 'crispy_forms',
-    # 'reversion',
-    # 'wechat',
+    'django_forms_bootstrap',
     'blog',
-    # 'stock',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.weibo',
-    'timertask',
     'djcelery',
     'ckeditor',
     'ckeditor_uploader',
+    'imagekit'
 ]
 
 SITE_ID = 1
@@ -159,11 +155,13 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = 'static'
 
-TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),)
+TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),os.path.join(BASE_DIR,'avatar'), )
 
 CKEDITOR_JQUERY_URL = '//cdn.bootcss.com/jquery/1.11.3/jquery.min.js'
 CKEDITOR_UPLOAD_PATH = "uploads"
 
+MEDIA_URL = '/meida/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'meida').replace('\\', '/')
 
 APP_ID = 'wxb950784440d6b5ab'
 APP_SECRET = '904063a29559a3e14f7f7e121c179f64'
@@ -180,5 +178,11 @@ CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 LOGIN_REDIRECT_URL = '/'
 EMAIL_HOST = 'smtp.163.com'
 EMAIL_HOST_USER = 'mboneauto@163.com'
-EMAIL_HOST_PASSWORD = 'lvSaner2017'
+EMAIL_HOST_PASSWORD = 'hujie2007'
 EMAIL_PORT = 25
+
+ACCOUNT_EMAIL_VERIFICATION =  'none'
+
+DEFAULT_FROM_EMAIL = 'Auto <mboneauto@163.com>'
+
+AUTH_USER_MODEL = 'blog.User'
