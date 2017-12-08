@@ -157,11 +157,13 @@ STATIC_ROOT = 'static'
 
 TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),os.path.join(BASE_DIR,'avatar'), )
 
-CKEDITOR_JQUERY_URL = '//cdn.bootcss.com/jquery/1.11.3/jquery.min.js'
-CKEDITOR_UPLOAD_PATH = "uploads"
 
 MEDIA_URL = '/meida/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'meida').replace('\\', '/')
+
+
+CKEDITOR_JQUERY_URL = '//cdn.bootcss.com/jquery/1.11.3/jquery.min.js'
+CKEDITOR_UPLOAD_PATH = "uploads"
 
 APP_ID = 'wxb950784440d6b5ab'
 APP_SECRET = '904063a29559a3e14f7f7e121c179f64'
