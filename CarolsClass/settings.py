@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_forms_bootstrap',
+    'django.contrib.sitemaps',
     'blog',
     'allauth',
     'allauth.account',
@@ -49,7 +50,7 @@ INSTALLED_APPS = [
     'djcelery',
     'ckeditor',
     'ckeditor_uploader',
-    'imagekit'
+    'imagekit',
 ]
 
 SITE_ID = 1

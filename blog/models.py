@@ -62,6 +62,9 @@ class Blog(models.Model):
     def __str__(self):
         return self.blog_title
 
+    def get_absolute_url(self):
+        return "/blog/%i/" % self.id
+
 class Comment(models.Model):
     blog = models.ForeignKey(Blog,verbose_name='博客',on_delete=True)
     user = models.ForeignKey(User,verbose_name='用户',on_delete=True)

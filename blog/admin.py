@@ -1,10 +1,8 @@
 from django.contrib import admin
-
 # Register your models here.
 from django.contrib.auth.admin import UserAdmin
 
 from blog.models import Blog, Category, Comment, User
-
 
 class BloagAdmin(admin.ModelAdmin):
     list_display = ('blog_title','blog_author','blog_createtime','blog_views','blog_status')

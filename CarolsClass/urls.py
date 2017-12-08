@@ -17,15 +17,32 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.sitemaps import GenericSitemap
+from django.views.decorators.cache import cache_page
 
 from CarolsClass import settings
 from blog import views
+from django.contrib.sitemaps import views as sitemaps_views
 
+from blog.models import Blog
+
+sitemaps = {
+    'blog': GenericSitemap({'queryset': Blog.objects.filter(blog_status=2), 'date_field': 'blog_datetime'},
+                           priority=0.6),
+    # 如果还要加其它的可以模仿上面的
+}
 urlpatterns = [
-    url(r'^$',views.index),
-    url(r'^admin/', admin.site.urls),
-    url(r'^wechat/', include('wechat.urls')),
-    url(r'^blog/', include('blog.urls')),
-    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
-    url(r'^accounts/', include('allauth.urls')),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+                  url(r'^$', views.index),
+                  url(r'^admin/', admin.site.urls),
+                  url(r'^wechat/', include('wechat.urls')),
+                  url(r'^blog/', include('blog.urls')),
+                  url(r'^ckeditor/', include('ckeditor_uploader.urls')),
+                  url(r'^accounts/', include('allauth.urls')),
+                  url(r'^sitemap\.xml$',
+                      cache_page(86400)(sitemaps_views.index),
+                      {'sitemaps': sitemaps, 'sitemap_url_name': 'sitemaps'}),
+                  url(r'^sitemap-(?P<section>.+)\.xml$',
+                      cache_page(86400)(sitemaps_views.sitemap),
+                      {'sitemaps': sitemaps}, name='sitemaps'),
+
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
