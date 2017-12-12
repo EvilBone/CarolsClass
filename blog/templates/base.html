@@ -22,9 +22,16 @@
 <body style="background-color: #f6f6f6">
 <nav class="navbar  navbar-fixed-top">
     <div class="container-fluid">
-        <div class="navbar-header" style="height:30px">
-            <a class="navbar-brand" href="/" style="height: 30px">鱼和骨头</a>
+        <div class="navbar-header" >
+
+            <a class="navbar-brand" href="/" >
+                <img alt="鱼和骨头" width="40px" src="{% static 'images/brand.png' %}">
+                </a>
         </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li ><a href="#" style="color: white">读书随笔</a></li>
+      </ul>
         <ul class="nav navbar-nav navbar-right">
             {% if  user.is_authenticated %}
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" role="button"

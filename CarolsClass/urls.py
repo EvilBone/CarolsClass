@@ -44,5 +44,6 @@ urlpatterns = [
                   url(r'^sitemap-(?P<section>.+)\.xml$',
                       cache_page(86400)(sitemaps_views.sitemap),
                       {'sitemaps': sitemaps}, name='sitemaps'),
+                  url(r'^tracking/', include('tracking.urls')),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

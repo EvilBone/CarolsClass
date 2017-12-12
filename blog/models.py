@@ -66,10 +66,10 @@ class Blog(models.Model):
         return "/blog/%i/" % self.id
 
 class Comment(models.Model):
-    blog = models.ForeignKey(Blog,verbose_name='博客',on_delete=True)
-    user = models.ForeignKey(User,verbose_name='用户',on_delete=True)
+    blog = models.ForeignKey(Blog,verbose_name='博客')
+    user = models.ForeignKey(User,verbose_name='用户')
     comment_ctime = models.DateTimeField(verbose_name='创建时间',auto_now_add=True)
-    parent_comm = models.ForeignKey('self',verbose_name='父评论',default=1,on_delete=True)
+    parent_comm = models.ForeignKey('self',verbose_name='父评论',default=1)
     content = models.TextField(verbose_name='内容')
 
     def children(self):

@@ -1,11 +1,10 @@
 navbar-nav > li > a {
-    padding-top: 10px;
+    padding-top: 5px;
     padding-bottom: 10px;
 }
 
 .navbar-brand {
-    height: 40px;
-    padding-top: 10px;
+    padding-top:5px;
     color: #fff;
 }
 
@@ -15,7 +14,7 @@ navbar-nav > li > a {
 
 .navbar {
     min-height: 40px;
-    background-color: #6699CC;
+    background-color: rgb(26,166,155);
 }
 
 .navbar-toggle {

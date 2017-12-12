@@ -5,8 +5,8 @@
         <ul class="list-group col-lg-8">
             {% for blog in blogs %}
                 <li class="list-group-item">
-                    <span class="badge">{{ blog.blog_views }}</span>
-                    <span class="badge">{{ blog.blog_createtime }}</span>
+{#                    <span class="badge">{{ blog.blog_views }}</span>#}
+{#                    <span class="badge">{{ blog.blog_createtime }}</span>#}
                     <a href="/blog/{{ blog.id }}">{{ blog.blog_title }}</a>
                 </li>
             {% endfor %}
