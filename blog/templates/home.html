@@ -1,14 +1,22 @@
 {% extends 'base.html' %}
 {% block title %}鱼和骨头{% endblock %}
 {% block content %}
-       <h3>目录</h3>
-        <ul class="list-group col-lg-8">
-            {% for blog in blogs %}
-                <li class="list-group-item">
-{#                    <span class="badge">{{ blog.blog_views }}</span>#}
-{#                    <span class="badge">{{ blog.blog_createtime }}</span>#}
-                    <a href="/blog/{{ blog.id }}">{{ blog.blog_title }}</a>
-                </li>
-            {% endfor %}
-        </ul>
+    <ul class="list-group col-lg-8" style="padding-top: 30px">
+        {% for blog in blogs %}
+            <li class="list-group-item">
+                <div class="media">
+                    <div class="media-body">
+                        <a href="/blog/{{ blog.id }}"><h4 class="media-heading"  style="padding-bottom: 5px"><strong>{{ blog.blog_title }}</strong></h4></a>
+                         <p>{{ blog.blog_abstract |safe}}</p>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <small>{{ blog.timeInternal }}</small>
+                </div>
+{#                <a href="/blog/{{ blog.id }}">{{ blog.blog_title }}#}
+{#                    <p class="list-group-item-text">{{ blog.blog_abstract }}</p>#}
+{#                </a>#}
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}

@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 from blog.forms import ComContentForm, UserDetailForm
 # Create your views here.
-from blog.models import Blog, Comment
+from blog.models import Blog, Comment, Category
 
 
 def index(request):
@@ -20,13 +20,15 @@ def blog(request, blog_id):
     comments = Comment.objects.filter(blog=blog).order_by('-comment_ctime')
     return render(request, 'blog.html', {'blog': blog,'commentform':commentform,'comments':comments})
 
+def reading(request):
+    blogs = Category.objects.get(name='读书').blog_set.filter(blog_status=2).order_by('-blog_createtime')
+    return render(request, 'home.html', {'blogs': blogs})
+
 def add_comment(request):
     if request.method =='POST':
         blog_id = request.POST.get('blog_id')
         content = request.POST.get('com_content')
         comm_id = request.POST.get('comm_id')
-        print(comm_id)
-
         if content!=None or content!='':
             comments = Comment()
             comments.blog_id = blog_id

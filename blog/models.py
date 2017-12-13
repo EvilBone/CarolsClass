@@ -1,8 +1,12 @@
+import datetime
+
+import pytz
 from ckeditor.widgets import CKEditorWidget
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import User, AbstractUser
 from django.db import models
 from ckeditor.fields import RichTextField
+from django.utils.timezone import localtime, utc
 from imagekit.models import ProcessedImageField
 # Create your models here.
 from pilkit.processors import ResizeToFill
@@ -48,6 +52,7 @@ class Blog(models.Model):
     )
     blog_title = models.CharField(max_length=200,verbose_name='标题')
     blog_author = models.CharField(max_length=100,verbose_name='作者')
+    blog_abstract = RichTextUploadingField(verbose_name='摘要')
     blog_content = RichTextUploadingField(verbose_name='内容')
     blog_datetime = models.DateTimeField(verbose_name='更新时间',auto_now=True)
     blog_createtime = models.DateTimeField(verbose_name='创建时间',auto_now_add=True)
@@ -64,6 +69,28 @@ class Blog(models.Model):
 
     def get_absolute_url(self):
         return "/blog/%i/" % self.id
+
+    def timeInternal(self):
+        now = datetime.datetime.utcnow().replace(tzinfo=utc)
+        createtime = self.blog_createtime
+        delta = (now-createtime).seconds
+        ms = delta/60
+        hours = ms/60
+        days = (now-createtime).days
+        mounths = days/30
+        years = mounths/12
+        if delta<60 and days==0:
+            return '刚刚'
+        elif ms<60 and days==0:
+            return '%d分前'% ms
+        elif hours<24 and days==0:
+            return '%d小时前' % hours
+        elif days<30:
+            return '%d天前' % days
+        elif mounths<12:
+            return  '%d月前' % mounths
+        else:
+            return '%年前'% years
 
 class Comment(models.Model):
     blog = models.ForeignKey(Blog,verbose_name='博客')

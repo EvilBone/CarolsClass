@@ -30,7 +30,7 @@
         </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li ><a href="#" style="color: white">读书随笔</a></li>
+        <li ><a href="{% url 'blog:reading' %}" style="color: white">读书随笔</a></li>
       </ul>
         <ul class="nav navbar-nav navbar-right">
             {% if  user.is_authenticated %}
