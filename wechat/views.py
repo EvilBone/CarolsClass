@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 import hashlib
 
 from wechat import receive, reply
+from wechat.models import Article
 
 
 @csrf_exempt
@@ -50,6 +51,14 @@ def wechat(request):
                 fromUser = recMsg.ToUserName
                 content = "From "+fromUser+"to "+toUser+recMsg.Content
                 replyMsg = reply.TextMsg(toUser, fromUser, content)
+                return HttpResponse(replyMsg.send())
+            elif recMsg.Content == 'wz':
+                toUser = recMsg.FromUserName
+                fromUser = recMsg.ToUserName
+                articles = Article.objects.all()
+                count = len(articles)
+                # content = "From " + fromUser + "to " + toUser + recMsg.Content
+                replyMsg = reply.NewsMsg(toUser, fromUser, count,articles)
                 return HttpResponse(replyMsg.send())
             else:
                 toUser = recMsg.FromUserName

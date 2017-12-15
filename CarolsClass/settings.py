@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'imagekit',
     'tracking',
+    'wechat',
 ]
 
 SITE_ID = 1

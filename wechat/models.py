@@ -13,4 +13,11 @@ class Student(models.Model):
         verbose_name = '学生'
         verbose_name_plural = "学生"
 
+class Article(models.Model):
+    title = models.CharField(max_length=500,verbose_name='标题')
+    des = models.TextField(verbose_name='描述')
+    picurl = models.URLField(verbose_name='图片链接')
+    url = models.URLField(verbose_name='文章链接')
+
+
 
