@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load django_tables2 %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block title %}鱼和骨头|任务管理{% endblock %}
+{% block content %}
+    <div class="panel panel-body">
+        <ol class="breadcrumb">
+            <li><a href="/">主页</a></li>
+            <li><a href="/task">任务列表</a></li>
+            <li class="active">新增任务</li>
+        </ol>
+        <hr style="margin: 3px">
+        <div class="panel panel-body col-lg-10" style="background-color: white">
+            {% csrf_token %}
+            <form action="/task/edittask" method="post" class="form">
+                {% csrf_token %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">基础信息</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                        <div class="col-lg-7">{% bootstrap_field obj.tname  layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='col-lg-10'  %} </div>
+                        <div class="col-lg-5">{% bootstrap_field obj.priority layout='horizontal' horizontal_label_class='col-lg-3' horizontal_field_class='col-lg-9' %}</div>
+                        </div>
+                        <div class="row" style="margin-top: 10px">
+                        <div class="col-lg-7">{% bootstrap_field obj.type  layout='horizontal' horizontal_label_class='col-lg-2' horizontal_field_class='col-lg-10'  %} </div>
+                        <div class="col-lg-5">{% bootstrap_field obj.checkperson layout='horizontal' horizontal_label_class='col-lg-3' horizontal_field_class='col-lg-9' %}</div>
+                        </div>
+                            <button type="submit" class="btn btn-primary">
+                            保存
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript" src="{% static "js/bootstrap-datepicker.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/locales/bootstrap-datepicker.zh-CN.min.js" %}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#id_planstartdate').datepicker({
+                format: 'yyyy/mm/dd',
+                autoclose: 'true'
+            });
+            $('#id_planenddate').datepicker({
+                format: 'yyyy/mm/dd',
+                autoclose: 'true'
+            });
+        });
+    </script>
+{% endblock %}

@@ -36,6 +36,7 @@ urlpatterns = [
                   url(r'^admin/', admin.site.urls),
                   url(r'^wechat/', include('wechat.urls')),
                   url(r'^blog/', include('blog.urls')),
+                  url(r'^task/', include('taskmanager.urls')),
                   url(r'^ckeditor/', include('ckeditor_uploader.urls')),
                   url(r'^accounts/', include('allauth.urls')),
                   url(r'^sitemap\.xml$',

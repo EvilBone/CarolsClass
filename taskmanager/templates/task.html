@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load django_tables2 %}
+{% block title %}鱼和骨头|任务管理{% endblock %}
+{% block content %}
+    <div class="panel panel-body" style="background-color: white;">
+        <ol class="breadcrumb" >
+            <li><a href="/">主页</a></li>
+            <li class="active">任务列表</li>
+        </ol>
+ <hr>
+        <nav class="navbar navbar-default">
+            <ul class="nav navbar-nav">
+                {% if filter == 'current' %}
+                    <li class="active"><a href="/task/?filter=current">当前工作</a></li>
+                    <li><a href="/task/?filter=finished">已完成</a></li>
+                    <li><a href="/task/?filter=all">全部</a></li>
+
+                {% elif filter == 'finished' %}
+                    <li><a href="/task/?filter=current">当前工作</a></li>
+                    <li class=" active"><a href="/task/?filter=finished">已完成</a></li>
+                    <li><a href="/task/?filter=all">全部</a></li>
+                {% else %}
+                    <li><a href="/task/?filter=current">当前工作</a></li>
+                    <li><a href="/task/?filter=finished">已完成</a></li>
+                    <li class="active"><a href="/task/?filter=all">全部</a></li>
+                {% endif %}
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="padding-right: 20px;">
+                <li>
+                    <a href="/task/edittask" style="padding: 5px" class="btn navbar-btn">新增
+                    </a>
+                </li>
+                <li>
+                    <a type="button" style="padding: 5px" class="btn navbar-btn">修改</a>
+                </li>
+            </ul>
+        </nav>
+        <div>
+        {% render_table table %}
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+           $('.table').on('dblclick','tr',function(){
+                //console.info($(this).text());
+                var oldVal = $(this).attr('id');
+                $(location).attr('href', '/task/'+oldVal);
+
+            });
+        });
+    </script>
+{% endblock %}
+

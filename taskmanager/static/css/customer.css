@@ -61,17 +61,6 @@ navbar-nav > li > a {
     height: 100%;
 
 }
-
 .redrow{
     background-color: red;
-    color:whitesmoke;
-}
-
-.tasktable{
-    font-size: small;
-}
-
-.control-label{
-    padding-left: 0px;
-    padding-right: 0px;
 }

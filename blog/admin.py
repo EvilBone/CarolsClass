@@ -20,3 +20,6 @@ admin.site.register(Blog,BloagAdmin)
 admin.site.register(Category,CategoryAdmin)
 admin.site.register(Comment,CommentAdmin)
 admin.site.register(User, UserAdmin)
+
+admin.site.site_header = '鱼和骨头管理'
+admin.site.site_title = '鱼和骨头'
